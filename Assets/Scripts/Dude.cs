@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dude : MonoBehaviour {
-    public float playerSpeed = 5f;
+    public float playerSpeed = 10f;
     public float rotationSpeed = 100f;
     public float fireRate = 5f;
     public float projectileSpeed = 5f;
+    public float movehorizontal;
+    public float movevertical;
 
     public Vector3 moveInput;
     public Vector3 moveVelocity;
 
-    private Rigidbody myRigidbody;
+    private Rigidbody rb;
 
     private Camera mainCamera;
 
@@ -22,29 +24,31 @@ public class Dude : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        myRigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Movement();
+        
         LookAt();
         Shoot();
     }
 
     private void FixedUpdate()
     {
-        myRigidbody.velocity = moveVelocity;
+        Movement();
     }
 
     void Movement()
     {
+
+        movehorizontal = Input.GetAxisRaw("Horizontal");
+        movevertical = Input.GetAxisRaw("Vertical");
+        Vector3 movement = new Vector3(movehorizontal * playerSpeed * Time.deltaTime, 0, movevertical * playerSpeed * Time.deltaTime);
+
+        rb.MovePosition(transform.position+movement);
         /*
-        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-        moveVelocity = moveInput * playerSpeed;
-        */
-        
         if (Input.GetKey(KeyCode.UpArrow))
         {
             transform.Translate(new Vector3(0,0,1) * playerSpeed * Time.deltaTime);
@@ -61,7 +65,7 @@ public class Dude : MonoBehaviour {
         {
             transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
         }
-        
+        */
     }
 
     void LookAt()
@@ -95,7 +99,8 @@ public class Dude : MonoBehaviour {
     void FireProjectile()
     {
         GameObject shot = Instantiate(projectile, rightHand.transform.position, Quaternion.identity) as GameObject;
-        shot.GetComponent<Rigidbody>().velocity = new Vector3(0, projectileSpeed, 0);
+        shot.GetComponent<Rigidbody>().AddForce(shot.transform.forward * projectileSpeed);
+        //shot.GetComponent<Rigidbody>().velocity = new Vector3(0, projectileSpeed, 0);
         //AudioSource.PlayClipAtPoint(shoot, transform.position);
     }
 }
