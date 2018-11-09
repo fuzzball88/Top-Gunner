@@ -226,9 +226,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 5
   rotationSpeed: 100
+  fireRate: 5
+  projectileSpeed: 5
   moveInput: {x: 0, y: 0, z: 0}
   moveVelocity: {x: 0, y: 0, z: 0}
   shoot: {fileID: 0}
+  projectile: {fileID: 1079343157773782, guid: 0b191d031dde8d14496b9fa104bed802, type: 2}
 --- !u!54 &120105773
 Rigidbody:
   m_ObjectHideFlags: 0
