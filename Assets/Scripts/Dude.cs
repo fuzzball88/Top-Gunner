@@ -6,7 +6,7 @@ public class Dude : MonoBehaviour {
     public float playerSpeed = 10f;
     public float rotationSpeed = 100f;
     public float fireRate = 5f;
-    public float projectileSpeed = 5f;
+
     public float movehorizontal;
     public float movevertical;
 
@@ -99,8 +99,6 @@ public class Dude : MonoBehaviour {
     void FireProjectile()
     {
         GameObject shot = Instantiate(projectile, rightHand.transform.position, gameObject.transform.rotation * projectile.transform.rotation) as GameObject;
-        //shot.GetComponent<Rigidbody>().AddForce(shot.transform.forward * projectileSpeed);
-        //shot.GetComponent<Rigidbody>().velocity = new Vector3(0, projectileSpeed, 0);
-        //AudioSource.PlayClipAtPoint(shoot, transform.position);
+        //AudioSource.PlayClipAtPoint(shot, transform.position);
     }
 }
