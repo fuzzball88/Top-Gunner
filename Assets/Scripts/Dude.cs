@@ -7,6 +7,8 @@ public class Dude : MonoBehaviour {
     public float rotationSpeed = 100f;
     public float fireRate = 5f;
 
+    public int health = 5;
+
     public float movehorizontal;
     public float movevertical;
 
@@ -18,12 +20,17 @@ public class Dude : MonoBehaviour {
     private Camera mainCamera;
 
     public AudioClip shoot;
+    public AudioClip death;
+    public AudioClip takeDamage;
+    public AudioClip emptyHand;
 
-    public GameObject projectile;
+    public GameObject weapon;
+    public GameObject noWeapon;
     public GameObject rightHand;
 
     // Use this for initialization
     void Start () {
+        rightHand = GameObject.FindGameObjectWithTag("PlayerShotPlace");
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
 	}
@@ -98,7 +105,29 @@ public class Dude : MonoBehaviour {
 
     void FireProjectile()
     {
-        GameObject shot = Instantiate(projectile, rightHand.transform.position, gameObject.transform.rotation * projectile.transform.rotation) as GameObject;
-        //AudioSource.PlayClipAtPoint(shot, transform.position);
+        if (weapon == null) {
+            AudioSource.PlayClipAtPoint(emptyHand, transform.position);
+            Instantiate(noWeapon, rightHand.transform.position, gameObject.transform.rotation * noWeapon.transform.rotation);
+        }
+        else { 
+        Instantiate(weapon, rightHand.transform.position, gameObject.transform.rotation * weapon.transform.rotation);
+        AudioSource.PlayClipAtPoint(shoot, transform.position);
+        }
+    }
+
+    void LoseHealth(int damage)
+    {
+        AudioSource.PlayClipAtPoint(takeDamage, transform.position);
+        health -= damage;
+        if (health < 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        AudioSource.PlayClipAtPoint(death, transform.position);
+        Destroy(this);
     }
 }
