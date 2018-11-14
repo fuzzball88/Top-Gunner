@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776cc56244a20a044a5618d8d65e6954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 1770096742302124, guid: 492eb953389465146a2e0f14fb990be7, type: 2}
+  gun: {fileID: 1915567075300376, guid: c806e4b2c67020e41acf282332d97d32, type: 2}
 --- !u!135 &135992976898918250
 SphereCollider:
   m_ObjectHideFlags: 1

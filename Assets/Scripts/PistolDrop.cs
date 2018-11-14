@@ -21,6 +21,7 @@ public class PistolDrop : MonoBehaviour {
         {
             Dude player = other.gameObject.GetComponent<Dude>();
             player.weapon = gun;
+            player.EquipWeapon();
         }
         Destroy(gameObject, 1f);
     }

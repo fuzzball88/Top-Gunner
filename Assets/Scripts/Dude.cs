@@ -12,6 +12,8 @@ public class Dude : MonoBehaviour {
     public float movehorizontal;
     public float movevertical;
 
+    public bool isArmed;
+
     public Vector3 moveInput;
     public Vector3 moveVelocity;
 
@@ -37,9 +39,9 @@ public class Dude : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        CheckStatus();
         LookAt();
-        Shoot();
+        Attack();
     }
 
     private void FixedUpdate()
@@ -90,7 +92,23 @@ public class Dude : MonoBehaviour {
         }
     }
 
-    void Shoot()
+    void CheckStatus()
+    {
+        
+    }
+
+    //Sets player armed and instantiates the weapon
+    public void EquipWeapon()
+    {
+        
+        isArmed = true;
+        GameObject gun = Instantiate(weapon, rightHand.transform.position, gameObject.transform.rotation * weapon.transform.rotation) as GameObject;
+        //Makes the gun appear as GunPlace child
+        gun.transform.parent = rightHand.transform;
+
+    }
+
+    void Attack()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -109,9 +127,13 @@ public class Dude : MonoBehaviour {
             AudioSource.PlayClipAtPoint(emptyHand, transform.position);
             Instantiate(noWeapon, rightHand.transform.position, gameObject.transform.rotation * noWeapon.transform.rotation);
         }
-        else { 
-        Instantiate(weapon, rightHand.transform.position, gameObject.transform.rotation * weapon.transform.rotation);
-        AudioSource.PlayClipAtPoint(shoot, transform.position);
+        else {
+            Gun weaponInHand = gameObject.GetComponentInChildren<Gun>();
+            weaponInHand.Fire();
+            /*
+            Instantiate(weapon, rightHand.transform.position, gameObject.transform.rotation * weapon.transform.rotation);
+            AudioSource.PlayClipAtPoint(shoot, transform.position);
+            */
         }
     }
 
